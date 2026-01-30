@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 import os
 
@@ -21,4 +21,18 @@ def create_app():
     # registering all the blueprints
     app.register_blueprint(webhook)
     
+    # Home route
+    @app.route('/')
+    def home():
+        return jsonify({
+            'status': 'ok',
+            'message': 'GitHub Webhook Receiver API',
+            'endpoints': {
+                'webhook': '/webhook/receiver (POST)',
+                'events': '/webhook/events (GET)',
+                'health': '/webhook/health (GET)'
+            }
+        })
+    
     return app
+
